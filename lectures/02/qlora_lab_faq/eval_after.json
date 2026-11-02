@@ -1,0 +1,201 @@
+{
+  "summary": {
+    "label": "after",
+    "n": 21,
+    "format_rate": 1.0,
+    "content_rate": 0.9047619047619048,
+    "both_rate": 0.9047619047619048,
+    "seconds": 50.7
+  },
+  "rows": [
+    {
+      "question": "学習に使うモデルの名前は？",
+      "raw": "{\"answer\": \"演習で使うモデルは Qwen/Qwen3.5-0.8B で、ライセンスは Apache-2.0 です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "演習のモデル名とライセンスを教えてください",
+      "raw": "{\"answer\": \"演習で使うモデルは Qwen/Qwen3.5-0.8B で、ライセンスは Apache-2.0 です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "ノートブックが読み込むモデルはどれですか",
+      "raw": "{\"answer\": \"演習で使うモデルは Qwen/Qwen3.5-0.8B で、ライセンスは Apache-2.0 です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "学習時間の目安は？",
+      "raw": "{\"answer\": \"学習は 20 エポック（合計 40 ステップ）で、T4 GPU なら 4〜5 分で終わります。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "T4 GPU での学習時間を教えてください",
+      "raw": "{\"answer\": \"学習は 20 エポック（合計 40 ステップ）で、T4 GPU なら 4〜5 分で終わります。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "何エポック学習しますか",
+      "raw": "{\"answer\": \"学習は 20 エポック（合計 40 ステップ）で、T4 GPU なら 4〜5 分で終わります。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "LoRA の仕組みを教えてください",
+      "raw": "{\"answer\": \"LoRA は基盤モデルの重みを固定し、追加した小さな行列（adapter）だけを学習します。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "LoRA が更新するのはどの部分ですか",
+      "raw": "{\"answer\": \"LoRA は基盤モデルの重みを固定し、追加した小さな行列（adapter）だけを学習します。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "LoRA の学習対象を説明してください",
+      "raw": "{\"answer\": \"LoRA は基盤モデルの重みを固定し、追加した小さな行列（adapter）だけを学習します。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "QLoRA の特徴は？",
+      "raw": "{\"answer\": \"QLoRA は基盤モデルの重みを 4bit で保持してメモリを減らしますが、学習は速くなりません。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "QLoRA では重みを何 bit で保持しますか",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "QLoRA でメモリは減りますか",
+      "raw": "{\"answer\": \"QLoRA は基盤モデルの重みを 4bit で保持してメモリを減らしますが、学習は速くなりません。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "演習の提出方法は？",
+      "raw": "{\"answer\": \"演習の結果は lectures/02/answer.md に書き、作業ブランチから自分の fork の main へ PR を出します。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "answer.md はどのパスにありますか",
+      "raw": "{\"answer\": \"演習の結果は lectures/02/answer.md に書き、作業ブランチから自分の fork の main へ PR を出します。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "作業ブランチはどのブランチに PR しますか",
+      "raw": "{\"answer\": \"演習の結果は lectures/02/answer.md に書き、作業ブランチから自分の fork の main へ PR を出します。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "T4 GPU のメモリは何 GB ですか",
+      "raw": "{\"answer\": \"学習は 20 エポック（合計 40 ステップ）で、T4 GPU なら 4〜5 分で終わります。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "lora_r の値はいくつですか",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    },
+    {
+      "question": "QLoRA は 8bit でも使えますか",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    },
+    {
+      "question": "宿題の締切はいつですか",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    },
+    {
+      "question": "LoRA の行列のランクとは何ですか",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    },
+    {
+      "question": "Colab の無料枠はどのくらい使えますか",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    }
+  ]
+}
