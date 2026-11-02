@@ -21,25 +21,25 @@ from app.config import MODEL, api_error_message, get_api_key
 DEFAULT_QUESTION = "AIE2026の講座の宿題にある「3レベル」とは何ですか？"
 
 
-def print_usage(response) -> None:
-    usage = response.usage_metadata
-    print(f"[usage] 入力: {usage.prompt_token_count} / 出力: {usage.candidates_token_count}")
+def print_usage(metadata) -> None:
+    print(f"[usage] 入力: {metadata.prompt_token_count} / 出力: {metadata.candidates_token_count}")
 
 
 def ask(question: str) -> str:
     client = genai.Client(api_key=get_api_key())
     response = client.models.generate_content(model=MODEL, contents=question)
-    print_usage(response)
+    print_usage(response.usage_metadata)
     return response.text
 
 
-def chat(question: str) -> None:
+def chat(first_question: str) -> None:
     client = genai.Client(api_key=get_api_key())
     session = client.chats.create(model=MODEL)
+    question = first_question
     while question:
         response = session.send_message(question)
-        print_usage(response)
         print(response.text)
+        print_usage(response.usage_metadata)
         try:
             question = input("\n[質問] ").strip()
         except EOFError:
