@@ -1,0 +1,201 @@
+{
+  "summary": {
+    "label": "before",
+    "n": 21,
+    "format_rate": 0.19047619047619047,
+    "content_rate": 0.09523809523809523,
+    "both_rate": 0.09523809523809523,
+    "seconds": 44.8
+  },
+  "rows": [
+    {
+      "question": "学習に使うモデルの名前は？",
+      "raw": "{\"answer\": \"Qwen/Qwen3.5-0.8B\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "演習のモデル名とライセンスを教えてください",
+      "raw": "{\"answer\": \"Qwen/Qwen3.5-0.8B\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "ノートブックが読み込むモデルはどれですか",
+      "raw": "{\"answer\": \"Qwen/Qwen3.5-0.8B\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "学習時間の目安は？",
+      "raw": "{\"answer\": \"40 ステップ\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "T4 GPU での学習時間を教えてください",
+      "raw": "{\"answer\": \"4〜5 分\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "何エポック学習しますか",
+      "raw": "{\"answer\": \"20\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "LoRA の仕組みを教えてください",
+      "raw": "{\"answer\": \"LoRA (Low-Rank Adaptation) は、基盤モデルの重みを固定し、追加した小さな行列（adapter）だけを学習する手法です。\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "LoRA が更新するのはどの部分ですか",
+      "raw": "{\"answer\": \"LoRA は基盤モデルの重みを固定し、追加した小さな行列（adapter）だけを学習します。\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "LoRA の学習対象を説明してください",
+      "raw": "{\"answer\": \"LoRA は基盤モデルの重みを固定し、追加した小さな行列（adapter）だけを学習します。\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "QLoRA の特徴は？",
+      "raw": "{\"answer\": \"QLoRA は基盤モデルの重みを 4bit で保持してメモリを減らしますが、学習は速くなりません。\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "QLoRA では重みを何 bit で保持しますか",
+      "raw": "{\"answer\": \"4bit\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "QLoRA でメモリは減りますか",
+      "raw": "{\"answer\": \"否\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "演習の提出方法は？",
+      "raw": "{\"answer\": \"lecture/02/answer.md\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "answer.md はどのパスにありますか",
+      "raw": "{\"answer\": \"lecture/02/answer.md\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "作業ブランチはどのブランチに PR しますか",
+      "raw": "{\"answer\": \"main\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "T4 GPU のメモリは何 GB ですか",
+      "raw": "{\"answer\": \"16 GB\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "lora_r の値はいくつですか",
+      "raw": "{\"answer\": \"4\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "QLoRA は 8bit でも使えますか",
+      "raw": "{\"answer\": \"確認が必要\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    },
+    {
+      "question": "宿題の締切はいつですか",
+      "raw": "{\"answer\": \"確認が必要\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "LoRA の行列のランクとは何ですか",
+      "raw": "{\"answer\": \"LoRA の行列は、基盤モデルの重みを固定し、追加した小さな行列（adapter）だけを学習する仕組みです。LoRA の行列は、基盤モデルの重みを保持し、メモリを減らすための 4bit 精度のモデルです。\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "Colab の無料枠はどのくらい使えますか",
+      "raw": "{\"answer\": \"確認が必要\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    }
+  ]
+}

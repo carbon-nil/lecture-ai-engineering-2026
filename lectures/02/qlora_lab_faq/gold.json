@@ -1,0 +1,137 @@
+{
+  "学習に使うモデルの名前は？": {
+    "needs_review": false,
+    "must_include": [
+      "Qwen3.5-0.8B"
+    ]
+  },
+  "演習のモデル名とライセンスを教えてください": {
+    "needs_review": false,
+    "must_include": [
+      "Qwen3.5-0.8B"
+    ]
+  },
+  "ノートブックが読み込むモデルはどれですか": {
+    "needs_review": false,
+    "must_include": [
+      "Qwen3.5-0.8B"
+    ]
+  },
+  "学習時間の目安は？": {
+    "needs_review": false,
+    "must_include": [
+      "20 エポック",
+      "4〜5 分"
+    ]
+  },
+  "T4 GPU での学習時間を教えてください": {
+    "needs_review": false,
+    "must_include": [
+      "20 エポック",
+      "4〜5 分"
+    ]
+  },
+  "何エポック学習しますか": {
+    "needs_review": false,
+    "must_include": [
+      "20 エポック",
+      "4〜5 分"
+    ]
+  },
+  "LoRA の仕組みを教えてください": {
+    "needs_review": false,
+    "must_include": [
+      "固定",
+      "adapter"
+    ]
+  },
+  "LoRA が更新するのはどの部分ですか": {
+    "needs_review": false,
+    "must_include": [
+      "固定",
+      "adapter"
+    ]
+  },
+  "LoRA の学習対象を説明してください": {
+    "needs_review": false,
+    "must_include": [
+      "固定",
+      "adapter"
+    ]
+  },
+  "QLoRA の特徴は？": {
+    "needs_review": false,
+    "must_include": [
+      "4bit"
+    ]
+  },
+  "QLoRA では重みを何 bit で保持しますか": {
+    "needs_review": false,
+    "must_include": [
+      "4bit"
+    ]
+  },
+  "QLoRA でメモリは減りますか": {
+    "needs_review": false,
+    "must_include": [
+      "4bit"
+    ]
+  },
+  "演習の提出方法は？": {
+    "needs_review": false,
+    "must_include": [
+      "answer.md",
+      "PR"
+    ]
+  },
+  "answer.md はどのパスにありますか": {
+    "needs_review": false,
+    "must_include": [
+      "answer.md",
+      "PR"
+    ]
+  },
+  "作業ブランチはどのブランチに PR しますか": {
+    "needs_review": false,
+    "must_include": [
+      "answer.md",
+      "PR"
+    ]
+  },
+  "T4 GPU のメモリは何 GB ですか": {
+    "needs_review": true,
+    "must_include": [
+      "確認"
+    ]
+  },
+  "lora_r の値はいくつですか": {
+    "needs_review": true,
+    "must_include": [
+      "確認"
+    ]
+  },
+  "QLoRA は 8bit でも使えますか": {
+    "needs_review": true,
+    "must_include": [
+      "確認"
+    ]
+  },
+  "宿題の締切はいつですか": {
+    "needs_review": true,
+    "must_include": [
+      "確認"
+    ]
+  },
+  "LoRA の行列のランクとは何ですか": {
+    "needs_review": true,
+    "must_include": [
+      "確認"
+    ]
+  },
+  "Colab の無料枠はどのくらい使えますか": {
+    "needs_review": true,
+    "must_include": [
+      "確認"
+    ]
+  }
+}
