@@ -6,10 +6,12 @@
 
 import json
 import random
+from datetime import datetime
 from functools import cache
 from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+LOG_DIR = DATA_DIR.parent / "learning_log"  # 第3回 宿題（実装）。.gitignore 済み
 MAX_RESULTS = 3
 
 
@@ -100,3 +102,16 @@ def make_quiz(lecture: int) -> str:
         },
         ensure_ascii=False,
     )
+
+
+def save_learning_log(topic: str, note: str) -> str:
+    """学習の記録を learning_log/ フォルダに JSON ファイルとして保存する。
+
+    「今日学んだことを記録して」「このメモを保存して」のように、利用者が学習内容を
+    残したいと言ったときに使う。topic は短い題名、note は記録する本文。
+    保存してよいかの確認はプログラム側が利用者に行うので、聞き返さずにこのツールを呼んでよい。
+    """
+    LOG_DIR.mkdir(exist_ok=True)
+    path = LOG_DIR / f"{datetime.now():%Y%m%d_%H%M%S}.json"
+    path.write_text(json.dumps({"topic": topic, "note": note}, ensure_ascii=False, indent=2), encoding="utf-8")
+    return f"保存しました: {path.relative_to(LOG_DIR.parent)}"
