@@ -5,6 +5,7 @@ import json
 import math
 import re
 import sqlite3
+import unicodedata
 from contextlib import contextmanager
 from collections import defaultdict, deque
 from pathlib import Path
@@ -18,6 +19,7 @@ from app.config import (
     EMBEDDING_DIMENSIONS, EMBEDDING_MAX_TOKENS, EMBEDDING_MODEL,
     RAG_DB, RAG_DOCUMENT_IDS, RAG_SOURCE, RAG_TOP_K, RAG_TREE, get_api_key,
     RAG_GRAPH, GRAPH_START_K, GRAPH_HOPS, GRAPH_MAX_RESULTS,
+    HW05_DIR, PPR_DAMPING, PPR_PAGE_SEED_WEIGHT, COMMUNITY_TOP_K, COMMUNITY_PAGES,
 )
 
 
@@ -184,6 +186,125 @@ def search_graph(query: str) -> dict:
     return {"seeds": results, "expanded": expanded[:max(0, GRAPH_MAX_RESULTS - len(results))],
             "max_hops": GRAPH_HOPS}
 
+
+
+# --- 第5回 宿題（発展）: scripts/build_hw05_index.py が作った data/rag_data/hw05/ を使う検索 ---
+
+def normalize_term(text: str) -> str:
+    """全角・半角と大文字・小文字の違いをそろえる。"""
+    return unicodedata.normalize("NFKC", text).strip().casefold()
+
+
+def curated_terms() -> tuple[dict, dict]:
+    """graph.json の用語から、表記（別名を含む）→ 代表名 と、用語 ID → 代表名 を作る。"""
+    graph = json.loads(RAG_GRAPH.read_text(encoding="utf-8"))
+    terms = [node for node in graph["nodes"] if node["kind"] == "term"]
+    by_name = {normalize_term(name): node["title"]
+               for node in terms for name in [node["title"], *node.get("aliases", [])]}
+    return by_name, {node["id"]: node["title"] for node in terms}
+
+
+def load_hw05(name: str):
+    path = HW05_DIR / name
+    if not path.is_file():
+        raise FileNotFoundError(f"{path.name} がありません。scripts/build_hw05_index.py で作成してください。")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def match_terms(query: str, terms) -> list[str]:
+    """質問に名前か別名が出てくる用語を返す。英数字の名前は語の途中では当てない（API の中の Pi など）。"""
+    by_name, _ = curated_terms()
+    names = {normalize_term(term): term for term in terms}
+    names.update({name: term for name, term in by_name.items() if term in names.values()})
+    text = normalize_term(query)
+    return sorted({term for name, term in names.items()
+                   if len(name) >= 2 and re.search(rf"(?<![a-z0-9]){re.escape(name)}(?![a-z0-9])", text)})
+
+
+def personalized_pagerank(edges, seeds: dict, damping: float = PPR_DAMPING, iterations: int = 100) -> dict:
+    """重み付き無向グラフで、起点（seeds の重み）に戻りながら歩いたときの、各ノードの滞在確率を返す。"""
+    adjacent = defaultdict(dict)
+    for a, b, w in edges:
+        adjacent[a][b] = adjacent[a].get(b, 0) + w
+        adjacent[b][a] = adjacent[b].get(a, 0) + w
+    degree = {node: sum(links.values()) for node, links in adjacent.items()}
+    total = sum(seeds.values())
+    reset = {node: weight / total for node, weight in seeds.items()}
+    scores = dict(reset)
+    for _ in range(iterations):
+        updated = {node: (1 - damping) * weight for node, weight in reset.items()}
+        for node, score in scores.items():
+            for neighbor, w in adjacent.get(node, {}).items():
+                updated[neighbor] = updated.get(neighbor, 0) + damping * score * w / degree[node]
+        change = sum(abs(updated.get(n, 0) - scores.get(n, 0)) for n in updated.keys() | scores.keys())
+        scores = updated
+        if change < 1e-10:
+            break
+    return scores
+
+
+def search_ppr(query: str) -> dict:
+    """HippoRAG 型: 質問の用語とベクトル検索の上位を起点に、ページ・用語の二部グラフで PPR を回して順位を付ける。"""
+    if not isinstance(query, str) or not query.strip():
+        raise ValueError("検索語が空です。")
+    pages = {page["page_id"]: page for page in load_pages(RAG_SOURCE)}
+    page_terms = {pid: terms for pid, terms in load_hw05("term_graph.json")["pages"].items() if pid in pages}
+    term_pages = defaultdict(set)
+    for pid, terms in page_terms.items():
+        for term in terms:
+            term_pages[term].add(pid)
+    seed_terms = match_terms(query, term_pages)
+    # 用語の重みは HippoRAG と同じく「出てくるページ数の逆数」。どこにでも出る用語ほど弱い起点になる。
+    seeds = {f"term:{term}": 1 / len(term_pages[term]) for term in seed_terms}
+    # 簡略化: HippoRAG 2 は全ページを弱い起点にするが、ここではベクトル検索の上位 RAG_TOP_K 件だけにした。
+    for hit in search(query):
+        seeds[f"page:{hit['page_id']}"] = PPR_PAGE_SEED_WEIGHT * max(0.0, 1 - hit["distance"])
+    edges = [(f"page:{pid}", f"term:{term}", 1) for pid, terms in page_terms.items() for term in terms]
+    scores = personalized_pagerank(edges, seeds)
+    ranked = sorted((key for key in scores if key.startswith("page:")), key=lambda k: (-scores[k], k))
+    results = []
+    for key in ranked[:GRAPH_MAX_RESULTS]:
+        pid = key.removeprefix("page:")
+        results.append({**pages[pid], "score": round(scores[key], 6),
+                        "matched_terms": [term for term in page_terms[pid] if term in seed_terms]})
+    return {"seed_terms": seed_terms, "results": results}
+
+
+def browse_tree_summary(node_id: str | None = None) -> dict:
+    """RAPTOR 型: browse_tree と同じ目次に、講義と章の要約（LLM で事前に作成）を付けて返す。"""
+    summaries = load_hw05("tree_summaries.json")
+    data = browse_tree(node_id)
+    for item in [data["node"], *data["children"]]:
+        if item["id"] in summaries:
+            item["summary"] = summaries[item["id"]]
+    return data
+
+
+def search_communities(query: str) -> dict:
+    """GraphRAG 型: 質問に近い用語コミュニティの要約と、その用語を含むページから質問に近いものを返す。"""
+    if not isinstance(query, str) or not query.strip():
+        raise ValueError("検索語が空です。")
+    reports = load_hw05("communities.json")["communities"]
+    page_terms = load_hw05("term_graph.json")["pages"]
+    vector = embed_text(query.strip(), "RETRIEVAL_QUERY")
+    similarity = {c["key"]: sum(a * b for a, b in zip(vector, c["embedding"])) for c in reports}
+    chosen = sorted(reports, key=lambda c: (-similarity[c["key"]], c["key"]))[:COMMUNITY_TOP_K]
+    seen, results = set(), []
+    with open_index(RAG_DB) as db:
+        for community in chosen:
+            members = set(community["terms"])
+            ids = [pid for pid, terms in page_terms.items() if members & set(terms) and pid not in seen]
+            rows = db.execute(f"""
+                SELECT page_id, document_id, lecture, document_title, section, title, page, content,
+                       vec_distance_cosine(embedding, ?) AS distance
+                FROM chunks WHERE page_id IN ({",".join("?" * len(ids))})
+                ORDER BY distance, page_id LIMIT ?
+            """, (sqlite_vec.serialize_float32(vector), *ids, COMMUNITY_PAGES)).fetchall() if ids else []
+            seen.update(row["page_id"] for row in rows)
+            results.append({"title": community["title"], "summary": community["summary"],
+                            "similarity": round(similarity[community["key"]], 4),
+                            "terms": community["terms"][:15], "pages": [dict(row) for row in rows]})
+    return {"communities": results}
 
 
 def run_full_context(agent, question: str, model, instructions: str, prompt_template: str):

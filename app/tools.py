@@ -131,6 +131,55 @@ def search_graph(query: str) -> str:
         return json.dumps({"error": api_error_message(e.code)}, ensure_ascii=False)
 
 
+# 第5回 宿題（発展）: グラフ・ツリーを使う 3 つの検索方式
+
+def search_ppr(query: str) -> str:
+    """資料を検索し、質問に出てくる用語とページのつながりから点数を付けて、関連ページの本文と引用情報を返す。
+
+    queryには質問文か、調べたい用語を含む検索語を指定する。用語の名前が入っていると、その用語を含むページが上がる。
+    """
+    import sqlite3
+    from google.genai.errors import APIError
+    from app.retrieval import search_ppr as search
+
+    try:
+        return json.dumps(search(query), ensure_ascii=False)
+    except (ValueError, OSError, sqlite3.Error) as e:
+        return json.dumps({"error": str(e)}, ensure_ascii=False)
+    except APIError as e:
+        return json.dumps({"error": api_error_message(e.code)}, ensure_ascii=False)
+
+
+def browse_tree_summary(node_id: str | None = None) -> str:
+    """目次をたどる。講義と章には内容の要約、ページには先頭文が付く。ページIDを指定すると全文を返す。
+
+    最初はnode_idを省略する。続いて、要約を見て選んだ講義・章のIDを指定して目次をたどる。
+    """
+    from app.retrieval import browse_tree_summary as browse
+
+    try:
+        return json.dumps(browse(node_id), ensure_ascii=False)
+    except (ValueError, OSError) as e:
+        return json.dumps({"error": str(e)}, ensure_ascii=False)
+
+
+def search_communities(query: str) -> str:
+    """資料の用語のまとまり（コミュニティ）から質問に近いものを選び、その要約と、まとまりの中で質問に近いページの本文を返す。
+
+    複数の回にまたがる主題や全体像を聞かれたときに使う。queryには調べたい内容を指定する。
+    """
+    import sqlite3
+    from google.genai.errors import APIError
+    from app.retrieval import search_communities as search
+
+    try:
+        return json.dumps(search(query), ensure_ascii=False)
+    except (ValueError, OSError, sqlite3.Error) as e:
+        return json.dumps({"error": str(e)}, ensure_ascii=False)
+    except APIError as e:
+        return json.dumps({"error": api_error_message(e.code)}, ensure_ascii=False)
+
+
 def make_quiz(lecture: int) -> str:
     """指定した回の用語から 1 つを選び、
     確認問題と答えを返す。
