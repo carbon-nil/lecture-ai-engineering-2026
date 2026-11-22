@@ -22,6 +22,12 @@ RAG_TOP_K = 5
 GRAPH_START_K = 3
 GRAPH_HOPS = 2
 GRAPH_MAX_RESULTS = 10
+# 第5回 宿題（発展）: 索引データと検索方式の設定
+HW05_DIR = ROOT / "data/rag_data/hw05"
+PPR_DAMPING = 0.5  # HippoRAG: 各ステップで辺をたどる確率
+PPR_PAGE_SEED_WEIGHT = 0.05  # HippoRAG 2: passage_node_weight, ベクトル検索の上位ページを弱い起点にする
+COMMUNITY_TOP_K = 2  # コミュニティを返す数
+COMMUNITY_PAGES = 4  # 1 つのコミュニティから返すページ数
 EMBEDDING_MODEL = "gemini-embedding-001"
 EMBEDDING_DIMENSIONS = 768
 # 2,048トークンの上限に対し、タスク指定等の分を残す。超過時は切り捨てず停止する。
